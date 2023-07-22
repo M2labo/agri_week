@@ -1,11 +1,14 @@
 <template>
   <div>
     <h2>Speed</h2>
-    <div class="speed-indicator" :style="{ width: speed + '%' }"></div>
+    <svg class="gauge" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50">
+      <circle cx="50" cy="50" r="40" stroke="grey" stroke-width="2" fill="transparent" />
+      <line :transform="`rotate(${speed}, 50, 50)`" x1="50" y1="50" x2="0" y2="50" style="stroke:rgb(255,0,0);stroke-width:2" />
+    </svg>
     <p>Your current speed is: {{ speed }} km/h</p>
     <button @click="increaseSpeed">Increase Speed</button>
     <button @click="decreaseSpeed">Decrease Speed</button>
-    
+    <button @click="stopCar">Stop</button>
   </div>
 </template>
 
@@ -18,10 +21,13 @@ export default {
   },
   methods: {
     increaseSpeed() {
-      if (this.speed < 100) this.speed += 10; // Assume the maximum speed is 100km/h
+      if (this.speed < 180) this.speed += 10; // Assume the maximum speed is 180km/h
     },
     decreaseSpeed() {
       if (this.speed > 0) this.speed -= 10;
+    },
+    stopCar() {
+      this.speed = 0;
     }
   }
 };
@@ -32,15 +38,16 @@ h1 {
   text-align: center;
 }
 
-.speed-indicator {
-  height: 20px;
-  background-color: blue;
-  margin-bottom: 20px;
+.gauge {
+  width: 200px;
+  height: 100px;
+  display: block;
+  margin: 20px auto;
 }
 
 p {
   text-align: center;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 button {

@@ -9,7 +9,7 @@
     </div>
   </div>
   <div>
-    <h1>Car</h1>
+    <h1>Mobile Mover</h1>
     <div class="speed">
       <Speed />
     </div>
@@ -33,10 +33,12 @@ export default {
 
 <style scoped>
 .accelerator{
-  width: 40%;
+  width: 30%;
+  margin: auto 50px;
 }
 
 .speed{
-  width: 40%;
+  width: 30%;
+  margin: auto 50px;
 }
 </style>

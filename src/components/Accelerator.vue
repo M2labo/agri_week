@@ -1,7 +1,9 @@
 <template>
     <div>
       <h2>Accelerator</h2>
-      <div class="speed-indicator" :style="{ width: speed + '%' }"></div>
+      <div class="box">
+        <div class="speed-indicator" :style="{ width: speed + '%' }"></div>
+      </div>
       <p>Your current accelerator is: {{ speed }} %</p>
       <button @click="increaseSpeed">Increase Speed</button>
       <button @click="decreaseSpeed">Decrease Speed</button>
@@ -40,7 +42,7 @@
   
   p {
     text-align: center;
-    font-size: 24px;
+    font-size: 22px;
   }
   
   button {
