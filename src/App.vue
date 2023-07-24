@@ -2,16 +2,24 @@
   <div>
     <h1>Camera</h1>
   </div>
-  <div>
-    <h1>Controller</h1>
+  <h1>Controller</h1>
+  <div class="controller">
     <div class="accelerator">
       <Accelerator />
     </div>
+    <div class="handle">
+      <Handle />
+    </div>
+    
   </div>
-  <div>
-    <h1>Mobile Mover</h1>
+
+  <h1>Mobile Mover</h1>
+  <div class="mobilemover">
     <div class="speed">
       <Speed />
+    </div>
+    <div class="direction">
+      <Direction />
     </div>
   </div>
   
@@ -21,24 +29,49 @@
 <script>
 import Speed from './components/Speed.vue'
 import Accelerator from './components/Accelerator.vue'
+import Handle from './components/Handle.vue'
+import Direction from './components/Direction.vue'
 
 export default {
   name: 'App',
   components: {
     Speed,
-    Accelerator
+    Handle,
+    Accelerator,
+    Direction
   }
 }
 </script>
 
 <style scoped>
+
+.controller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobilemover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .accelerator{
-  width: 30%;
-  margin: auto 50px;
+  width: 20%;
+  margin: auto 10%;
 }
 
 .speed{
-  width: 30%;
-  margin: auto 50px;
+  width: 20%;
+  margin: auto 10%;
+}
+
+.handle {
+  width: 20%;
+  margin: auto 10%;
+}
+.direction {
+  width: 20%;
+  margin: auto 10%;
 }
 </style>

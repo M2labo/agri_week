@@ -8,7 +8,7 @@
     <p>Your current speed is: {{ speed }} km/h</p>
     <button @click="increaseSpeed">Increase Speed</button>
     <button @click="decreaseSpeed">Decrease Speed</button>
-    <button @click="stopCar">Stop</button>
+    
   </div>
 </template>
 
@@ -25,9 +25,6 @@ export default {
     },
     decreaseSpeed() {
       if (this.speed > 0) this.speed -= 10;
-    },
-    stopCar() {
-      this.speed = 0;
     }
   }
 };
