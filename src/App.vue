@@ -1,8 +1,12 @@
 <template>
   <div>
-    <h1>Camera</h1>
+    <h1>映像</h1>
+    <div class="camera">
+      <Camera />
+      <Camera />
+    </div>
   </div>
-  <h1>Controller</h1>
+  <!-- <h1>Controller</h1>
   <div class="controller">
     <div class="accelerator">
       <Accelerator />
@@ -10,8 +14,11 @@
     <div class="handle">
       <Handle />
     </div>
+    <div class="work">
+      <Work />
+    </div>
     
-  </div>
+  </div> -->
 
   <h1>Mobile Mover</h1>
   <div class="mobilemover">
@@ -20,6 +27,9 @@
     </div>
     <div class="direction">
       <Direction />
+    </div>
+    <div class="flow">
+      <Flow />
     </div>
   </div>
   
@@ -31,6 +41,9 @@ import Speed from './components/Speed.vue'
 import Accelerator from './components/Accelerator.vue'
 import Handle from './components/Handle.vue'
 import Direction from './components/Direction.vue'
+import Work from './components/Work.vue'
+import Flow from './components/Flow.vue'
+import Camera from './components/Camera.vue'
 
 export default {
   name: 'App',
@@ -38,13 +51,21 @@ export default {
     Speed,
     Handle,
     Accelerator,
-    Direction
+    Direction,
+    Work,
+    Flow,
+    Camera
   }
 }
 </script>
 
 <style scoped>
 
+.camera {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .controller {
   display: flex;
   justify-content: center;
@@ -58,20 +79,30 @@ export default {
 }
 .accelerator{
   width: 20%;
-  margin: auto 10%;
+  margin: auto ;
 }
 
 .speed{
   width: 20%;
-  margin: auto 10%;
+  margin: auto ;
 }
 
 .handle {
   width: 20%;
-  margin: auto 10%;
+  margin: auto ;
 }
 .direction {
   width: 20%;
-  margin: auto 10%;
+  margin: auto;
+}
+
+.work {
+  width: 20%;
+  margin: auto ;
+}
+
+.flow {
+  width: 20%;
+  margin: auto ;
 }
 </style>

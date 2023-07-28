@@ -4,7 +4,7 @@
       <div class="box">
         <div class="speed-indicator" :style="{ width: speed + '%' }"></div>
       </div>
-      <p>Your current accelerator is: {{ speed }} %</p>
+      <p>Current accelerator: {{ speed }} %</p>
       <button @click="increaseSpeed">Increase Speed</button>
       <button @click="decreaseSpeed">Decrease Speed</button>
       
@@ -49,5 +49,6 @@
     display: block;
     margin: 10px auto;
   }
+  
   </style>
   

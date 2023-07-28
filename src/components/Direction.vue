@@ -1,10 +1,10 @@
 <template>
     <div>
-      <h2>Direction</h2>
-      <img :src="iconPath" :style="{ transform: `rotate(${direction}deg)` }" alt="Direction icon">
-      <p>Current direction: {{ direction }} degrees</p>
-      <button @click="turnRight">Turn Right</button>
-      <button @click="turnLeft">Turn Left</button>
+      <h2>向き</h2>
+      <img :src="iconPath" :style="{ transform: `rotate(${direction-45}deg)` }" alt="Direction icon">
+      <p>{{ direction }} deg</p>
+      <!-- <button @click="turnRight">Turn Right</button>
+      <button @click="turnLeft">Turn Left</button> -->
     </div>
   </template>
   
@@ -13,7 +13,7 @@
     data() {
       return {
         direction: 0,
-        iconPath: '/car.png'
+        iconPath: '/car2.png'
       };
     },
     methods: {
