@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <!-- <div>
     <h1>映像</h1>
     <div class="camera">
       <Camera />
       <Camera />
     </div>
-  </div>
+  </div> -->
   <!-- <h1>Controller</h1>
   <div class="controller">
     <div class="accelerator">
