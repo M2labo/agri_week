@@ -4,6 +4,24 @@
       <img :src="iconPath">
       
     </div>
+
+    <h3>Momo P2P</h3>
+    <div>
+      <select id="codec">
+        <option value="H264">H264</option>
+        <option value="VP8">VP8</option>
+        <option value="VP9">VP9</option>
+        <option value="AV1">AV1</option>
+      </select>
+      <input type="button" onclick="connect();" value="Connect">
+      <input type="button" onclick="disconnect();" value="Disconnect">
+      <input type="button" onclick="play();" value="Play">
+      <input type="text" id="data_text">
+      <input type="button" onclick="sendDataChannel();" value="Send">
+    </div>
+    <div>
+      <video id="remote_video" autoplay style="border: 3px solid gray;"></video>
+    </div>
   </template>
   
   <script>
