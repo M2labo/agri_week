@@ -1,11 +1,11 @@
 <template>
-  <!-- <div>
+  <div>
     <h1>映像</h1>
     <div class="camera">
-      <Camera />
-      <Camera />
+      <Video />
+      <Video />
     </div>
-  </div> -->
+  </div>
   <!-- <h1>Controller</h1>
   <div class="controller">
     <div class="accelerator">
@@ -19,7 +19,7 @@
     </div>
     
   </div> -->
-
+  
   <h1>Mobile Mover</h1>
   <div class="mobilemover">
     <div class="speed">
@@ -43,7 +43,7 @@ import Handle from './components/Handle.vue'
 import Direction from './components/Direction.vue'
 import Work from './components/Work.vue'
 import Flow from './components/Flow.vue'
-import Camera from './components/Camera.vue'
+import Video from './components/Video.vue'
 
 export default {
   name: 'App',
@@ -54,7 +54,7 @@ export default {
     Direction,
     Work,
     Flow,
-    Camera
+    Video
   }
 }
 </script>
@@ -63,7 +63,7 @@ export default {
 
 .camera {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 .controller {
