@@ -1,11 +1,5 @@
 <template>
     <div>
-      <p>ルームID
-        <input v-model="roomId" type="text" />
-      </p>
-      <p>クライアントID
-        <input v-model="clientId" disabled type="text" />
-      </p>
       <p>映像コーデック
         <select v-model="videoCodec" @change="onChangeVideoCodec">
           <option value="none">none</option>
@@ -31,48 +25,69 @@
   
   
   export default {
-  data() {
-    return {
-      signalingUrl: 'wss://ayame-labo.shiguredo.app/signaling',
-      roomId: 'mecchi624@ayame-labo',
-      clientId: null,
-      videoCodec: null,
-      audioCodec: null,
-      signalingKey: 'OzIaJg1oewJz6Q4tgGFVy5xKSKM34-2kDkptqfT8M8npW7hk',
-      options: Ayame.defaultOptions,
-      conn: null,
-      remoteVideo: null
-    };
-  },
-  mounted() {
-    this.remoteVideo = this.$el.querySelector('#remote-video');
-    this.options.clientId = this.clientId ? this.clientId : this.options.clientId;
-    if (this.signalingKey) {
-      this.options.signalingKey = this.signalingKey;
-    }
-  },
-  methods: {
-    disconnect() {
-      if (this.conn) {
-        this.conn.disconnect();
+    props: {
+      roomId: String,
+    },
+    data() {
+      return {
+        signalingUrl: 'ws://100.106.144.110:3000/signaling',
+        clientId: null,
+        videoCodec: 'AV1',
+        audioCodec: null,
+        signalingKey: null,
+        options: Ayame.defaultOptions,
+        conn: null,
+        remoteVideo: null,
+        dataChannel: null,
+        label: 'dataChannel'
+      };
+    },
+    mounted() {
+      this.remoteVideo = this.$el.querySelector('#remote-video');
+      this.options.clientId = this.clientId ? this.clientId : this.options.clientId;
+      if (this.signalingKey) {
+        this.options.signalingKey = this.signalingKey;
       }
     },
-    async startConn() {
-      this.options.video.codec = this.videoCodec;
-      this.conn = Ayame.connection(this.signalingUrl, this.roomId, this.options, true);
-      await this.conn.connect(null);
-      this.conn.on('open', ({authzMetadata}) => console.log(authzMetadata));
-      this.conn.on('disconnect', (e) => {
-        console.log(e);
-        this.remoteVideo.srcObject = null;
-      });
-      this.conn.on('addstream', (e) => {
-        this.remoteVideo.srcObject = e.stream;
-      });
-    },
-    onChangeVideoCodec() {
-      // 必要に応じてここにコーデック変更時の処理を記述
-    }
+    methods: {
+      disconnect() {
+        if (this.conn) {
+          this.conn.disconnect();
+        }
+      },
+      async startConn() {
+        this.options.video.codec = this.videoCodec;
+        this.conn = Ayame.connection(this.signalingUrl, this.roomId, this.options, true);
+        
+        this.conn.on('open', async (e) => {
+            console.log("open");
+            this.dataChannel = await this.conn.createDataChannel(this.label);
+            if (this.dataChannel) {
+              this.dataChannel.onmessage = this.onMessage;
+            }
+        });
+        this.conn.on('datachannel', (channel) => {
+          console.log("datachannel")
+          if (!this.dataChannel) {
+            this.dataChannel = channel;
+            this.dataChannel.onmessage = this.onMessage;
+          }
+        });
+        this.conn.on('disconnect', (e) => {
+          console.log(e);
+          this.remoteVideo.srcObject = null;
+        });
+        this.conn.on('addstream', (e) => {
+          this.remoteVideo.srcObject = e.stream;
+        });
+        await this.conn.connect(null);
+      },
+      onChangeVideoCodec() {
+        // 必要に応じてここにコーデック変更時の処理を記述
+      },
+      onMessage(e) {
+          console.log(e.data);
+      }
   }
 }
 </script>

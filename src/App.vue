@@ -2,8 +2,8 @@
   <div>
     <h1>映像</h1>
     <div class="camera">
-      <Video />
-      <Video />
+      <Video roomId="front_camera"/>
+      <Video roomId="back_camera"/>
     </div>
   </div>
   <!-- <h1>Controller</h1>
