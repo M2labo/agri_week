@@ -42,8 +42,9 @@
         dataChannel: null,
         label: 'dataChannel',
         controllers : {},
-        
-
+        left_speed : 0,
+        right_speed : 0,
+        Steering : 0.0,
         
       };
     },
@@ -108,43 +109,55 @@
             a.appendChild(e);
         }
         d.appendChild(a);
-        document.body.appendChild(d);
         let rAF = window.requestAnimationFrame
         rAF(this.updateStatus);
     },
-    updateStatus() {
+    async updateStatus() {
       this.scanGamepads();
-      for (let j in this.controllers) {
-          var controller = this.controllers[j];
-          var d = document.getElementById("controller" + j);
-          var buttons = d.getElementsByClassName("button");
-          //ボタン情報の状態取得
-          for (var i = 0; i < controller.buttons.length; i++) {
-              var b = buttons[i];
-              var val = controller.buttons[i];
-              var pressed = val == 1.0;
-              if (typeof (val) == "object") {
-                  pressed = val.pressed;
-                  val = val.value;
-              }
-              var pct = Math.round(val * 100) + "%";
-              b.style.backgroundSize = pct + " " + pct;
-              if (pressed) {
-                  b.className = "button pressed";
-              } else {
-                  b.className = "button";
-              }
-          }
-          //アナログコントロール情報の状態取得
-          var axes = d.getElementsByClassName("axis");
-          for (var i = 0; i < controller.axes.length; i++) {
-              var a = axes[i];
-              a.innerHTML = i + ": " + controller.axes[i].toFixed(4);
-              a.setAttribute("value", controller.axes[i]);
-          }
+      let shift = 0
+      if(this.controllers[0].buttons[12].pressed){
+        shift = 1
+      }else if(this.controllers[0].buttons[13].pressed){
+        shift = 2
+      }else if(this.controllers[0].buttons[14].pressed){
+        shift = 3
+      }else if(this.controllers[0].buttons[15].pressed){
+        shift = 4
+      }else if(this.controllers[0].buttons[16].pressed){
+        shift = 5
+      }else if(this.controllers[0].buttons[17].pressed){
+        shift = -1
       }
+
+      let handle = this.controllers[0].axes[0]
+      if(handle > 1){
+        handle = 1
+      }else if(handle < -1){
+        handle = -1
+      }
+      await this.sendSerial([parseInt(handle*64)+63]);
+
+      // console.log(this.controllers[0].axes[1])
+      // console.log(this.controllers[0].axes[2])
+      let accel = (-this.controllers[0].axes[2] + 1)/2
+      // console.log(accel)
+      if(shift == 0){
+        await this.sendSerial([63+128]);
+      }else if(shift > 0){
+        await this.sendSerial([parseInt(accel*64)+63+128]);
+      }else if(shift < 0){
+        await this.sendSerial([parseInt(-accel*64)+63+128]);
+      } 
+      
       let rAF = window.requestAnimationFrame
       rAF(this.updateStatus);
+  },
+  sendSerial(num) {
+    let arr8 = new Uint8Array(num);
+    if (this.dataChannel == null || this.dataChannel.readyState != "open") {
+      return;
+    }
+    this.dataChannel.send(arr8);
   },
   scanGamepads() {
     var gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
@@ -201,7 +214,16 @@
         // 必要に応じてここにコーデック変更時の処理を記述
       },
       onMessage(e) {
-          console.log(e.data);
+        let data = new TextDecoder().decode(e.data);
+        let datas = data.split(":")
+        if(datas[0] == "Speed"){
+          this.left_speed = Number(datas[1].split(",")[0])
+          this.right_speed = Number(datas[1].split(",")[1])
+          
+        }else if(datas[0] == "Steering"){
+          this.Steering = Number((datas[1] - 900)/10)
+          // console.log(this.Steering)
+        }
       }
   }
 }
