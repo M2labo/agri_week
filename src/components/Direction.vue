@@ -4,7 +4,8 @@
       <img :src="iconPath" :style="{ transform: `rotate(${direction*-1-45}deg)` }" alt="Direction icon">
       <p>{{ direction }} deg</p>
       <!-- <button @click="turnLeft">Turn Left</button>
-      <button @click="turnRight">Turn Right</button> -->
+      <button @click="turnRight">Turn Right</button>
+      <button @click="updateSteering(20)">commit</button> -->
       
     </div>
   </template>
@@ -13,16 +14,25 @@
   export default {
     data() {
       return {
-        direction: 0,
         iconPath: '/car2.png'
       };
     },
+    computed: {
+      direction() {
+        return this.$store.state.Steering;
+      }
+    },
     methods: {
       turnRight() {
-        this.direction -= 10; 
+        // this.direction -= 10; 
+        this.$store.commit('setSteering', 10);
       },
       turnLeft() {
         this.direction += 10; 
+      },
+      updateSteering(value) {
+        this.$store.commit('setSteering', value);
+        console.log(this.$store.state.Steering)
       }
     }
   };

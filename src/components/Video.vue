@@ -219,12 +219,15 @@
         if(datas[0] == "Speed"){
           this.left_speed = Number(datas[1].split(",")[0])
           this.right_speed = Number(datas[1].split(",")[1])
+          this.$store.commit('setSpeed', { left: this.left_speed, right: this.right_speed }); //storeの値を更新
           
         }else if(datas[0] == "Steering"){
           this.Steering = Number((datas[1] - 900)/10)
           // console.log(this.Steering)
+          this.$store.commit('setSteering', this.Steering); //storeの値を更新
         }
       }
+      
   }
 }
 </script>
