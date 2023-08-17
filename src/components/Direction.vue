@@ -14,7 +14,7 @@
   export default {
     data() {
       return {
-        iconPath: '/car2.png'
+        iconPath: 'https://github.com/M2labo/agri_week/blob/master/docs/car2.png?raw=true'
       };
     },
     computed: {
