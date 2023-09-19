@@ -21,6 +21,7 @@
     methods: {
       toggleSwitch() {
         this.isSwitchOn = !this.isSwitchOn;
+        this.$store.commit('setSwitchOn', this.isSwitchOn);
       },
     },
   };

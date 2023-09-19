@@ -45,6 +45,7 @@
         left_speed : 0,
         right_speed : 0,
         Steering : 0.0,
+        switchOn: false,
         
       };
     },
@@ -135,19 +136,38 @@
       }else if(handle < -1){
         handle = -1
       }
-      await this.sendSerial([parseInt(handle*64)+63]);
+      
 
       // console.log(this.controllers[0].axes[1])
       // console.log(this.controllers[0].axes[2])
       let accel = (-this.controllers[0].axes[2] + 1)/2
       // console.log(accel)
+
+
       if(shift == 0){
-        await this.sendSerial([63+128]);
+        await this.sendSerial([250,64,64,0]);
       }else if(shift > 0){
-        await this.sendSerial([parseInt(accel*64)+63+128]);
+        if(handle>= 0){
+          await this.sendSerial([250,parseInt(accel*63)+64,parseInt(handle*63),0]);
+        }else{
+          await this.sendSerial([250,parseInt(accel*63)+64,parseInt(handle*63)+64,0]);
+        }
       }else if(shift < 0){
-        await this.sendSerial([parseInt(-accel*64)+63+128]);
-      } 
+        if(handle >=0){
+          await this.sendSerial([250,parseInt(accel*63),parseInt(handle*63),0]);
+        }else{
+          await this.sendSerial([250,parseInt(accel*63),parseInt(handle*63)+64,0]);
+        }
+        
+      }
+      if(this.switchOn != this.$store.state.switchOn){
+        this.switchOn = this.$store.state.switchOn
+        if(this.switchOn){
+          await this.sendSerial([251,1]);
+        }else{
+          await this.sendSerial([251,0]);
+        }
+      }
       
       let rAF = window.requestAnimationFrame
       rAF(this.updateStatus);
