@@ -31,7 +31,7 @@
     },
     data() {
       return {
-        signalingUrl: 'ws://100.106.144.110:3000/signaling',
+        signalingUrl: 'ws://100.119.67.54:3000/signaling',
         clientId: null,
         videoCodec: 'AV1',
         audioCodec: null,
@@ -117,15 +117,15 @@
       this.scanGamepads();
       let shift = 0
       if(this.controllers[0].buttons[12].pressed){
-        shift = 1
+        shift = 20
       }else if(this.controllers[0].buttons[13].pressed){
-        shift = 2
+        shift = 40
       }else if(this.controllers[0].buttons[14].pressed){
-        shift = 3
+        shift = 60
       }else if(this.controllers[0].buttons[15].pressed){
-        shift = 4
+        shift = 80
       }else if(this.controllers[0].buttons[16].pressed){
-        shift = 5
+        shift = 100
       }else if(this.controllers[0].buttons[17].pressed){
         shift = -1
       }
@@ -147,20 +147,23 @@
       if(shift == 0){
         await this.sendSerial([250,64,64,0]);
       }else if(shift > 0){
-        if(handle>= 0){
-          await this.sendSerial([250,parseInt(accel*63)+64,parseInt(handle*63),0]);
+
+        if(handle >= 0){
+          await this.sendSerial([250,parseInt(accel*63)+64,parseInt(handle*63)+64,shift]);
         }else{
-          await this.sendSerial([250,parseInt(accel*63)+64,parseInt(handle*63)+64,0]);
+          await this.sendSerial([250,parseInt(accel*63)+64,parseInt(-handle*63),shift]);
         }
       }else if(shift < 0){
         if(handle >=0){
-          await this.sendSerial([250,parseInt(accel*63),parseInt(handle*63),0]);
+          await this.sendSerial([250,parseInt(accel*63),parseInt(handle*63)+64,shift]);
         }else{
-          await this.sendSerial([250,parseInt(accel*63),parseInt(handle*63)+64,0]);
+          await this.sendSerial([250,parseInt(accel*63),parseInt(-handle*63),shift]);
         }
         
       }
+
       if(this.switchOn != this.$store.state.switchOn){
+
         this.switchOn = this.$store.state.switchOn
         if(this.switchOn){
           await this.sendSerial([251,1]);
@@ -234,12 +237,14 @@
         // 必要に応じてここにコーデック変更時の処理を記述
       },
       onMessage(e) {
+        
         let data = new TextDecoder().decode(e.data);
+        console.log(data)
         let datas = data.split(":")
         if(datas[0] == "Speed"){
           this.left_speed = Number(datas[1].split(",")[0])
           this.right_speed = Number(datas[1].split(",")[1])
-          this.$store.commit('setSpeed', { left: this.left_speed, right: this.right_speed }); //storeの値を更新
+          this.$store.commit('setSpeed', { left: this.left_speed/10, right: this.right_speed/10 }); //storeの値を更新
           
         }else if(datas[0] == "Steering"){
           this.Steering = Number((datas[1] - 900)/10)

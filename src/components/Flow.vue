@@ -27,7 +27,9 @@
     },
     methods: {
         toggleSwitch() {
-        this.isSwitchOn = !this.isSwitchOn;
+          console.log('toggleSwitch');
+          this.isSwitchOn = !this.isSwitchOn;
+        this.$store.commit('setSwitchOn', this.isSwitchOn);
       },
       increaseSpeed() {
         if (this.speed < 100) this.speed += 10; // Assume the maximum speed is 100km/h
