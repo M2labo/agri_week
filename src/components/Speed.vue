@@ -5,7 +5,7 @@
       <circle cx="50" cy="50" r="40" stroke="grey" stroke-width="2" fill="transparent" />
       <line :transform="`rotate(${speed*30}, 50, 50)`" x1="50" y1="50" x2="0" y2="50" style="stroke:rgb(255,0,0);stroke-width:2" />
     </svg>
-    <p> {{ speed }} km/h</p>
+    <p> {{ speed/10 }} km/h</p>
       
     <!-- <button @click="increaseSpeed">Increase Speed</button>
     <button @click="decreaseSpeed">Decrease Speed</button>

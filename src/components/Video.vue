@@ -162,6 +162,19 @@
         
       }
 
+      //ポンプをオンオフ
+      if(this.controllers[0].buttons[2].pressed){
+        console.log('press');
+        this.isSwitchOn = true;
+        this.$store.commit('setSwitchOn', this.isSwitchOn);
+        console.log(this.$store.state.switchOn);
+      }else if(this.controllers[0].buttons[0].pressed){
+        console.log('press3');
+        this.isSwitchOn = false;
+        this.$store.commit('setSwitchOn', this.isSwitchOn);
+        console.log(this.$store.state.switchOn);
+      }
+
       if(this.switchOn != this.$store.state.switchOn){
 
         this.switchOn = this.$store.state.switchOn
