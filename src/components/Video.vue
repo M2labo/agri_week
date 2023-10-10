@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="web-video">
       <p>映像コーデック
         <select v-model="videoCodec" @change="onChangeVideoCodec">
           <option value="none">none</option>
@@ -16,7 +16,7 @@
         <button @click="disconnect">切断</button>
       </p>
       
-      <video id="remote-video" autoplay playsinline controls style="width: 400px; height: 300px; border: 1px solid black;"></video>
+      <video id="remote-video" autoplay playsinline controls style="width: 800px; height: 600px; border: 1px solid black;"></video>
     </div>
   </template>
   

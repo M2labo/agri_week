@@ -3,7 +3,7 @@
     <h1>映像</h1>
     <div class="camera">
       <Video roomId="front_camera" data_flg="true"/>
-      <Video roomId="back_camera" data_flg="false"/>
+      <!-- <Video roomId="back_camera" data_flg="false"/> -->
     </div>
   </div>
   <!-- <h1>Controller</h1>
@@ -106,3 +106,4 @@ export default {
   margin: auto ;
 }
 </style>
+
