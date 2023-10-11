@@ -3,8 +3,10 @@
     <h1>映像</h1>
     <div class="camera">
       <Video roomId="front_camera" data_flg="true"/>
+      <img src="/public/image.png" class="image" />
       <!-- <Video roomId="back_camera" data_flg="false"/> -->
     </div>
+    
   </div>
   <!-- <h1>Controller</h1>
   <div class="controller">
@@ -103,6 +105,11 @@ export default {
 
 .flow {
   width: 20%;
+  margin: auto ;
+}
+
+.image {
+  width: 40%;
   margin: auto ;
 }
 </style>
